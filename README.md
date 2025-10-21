@@ -2,7 +2,7 @@
 
 ![SQL](https://img.shields.io/badge/SQL-MySQL%208.0%2B-4479A1?logo=mysql&logoColor=white) ![License](https://img.shields.io/badge/license-BlackCat%20Proprietary-red) ![Status](https://img.shields.io/badge/status-stable-informational) ![Generated](https://img.shields.io/badge/generated-from%20schema--map-blue)
 
-> Schema package for table **coupons** (repo: $slug).
+> Schema package for table **coupons** (repo: `coupons`).
 
 ## Files
 ```
@@ -36,7 +36,7 @@ mysql -h 127.0.0.1 -P 3307 -u root -proot app < schema/001_table.sql
 |-------:|:-----|:----:|:--------|:------|
 | id | BIGINT UNSIGNED | — | — | AUTO_INCREMENT, PK |
 | code | VARCHAR(100) | NO | — |  |
-| type | ENUM(''percent'',''fixed'') | NO | — |  |
+| type | ENUM('percent','fixed') | NO | — |  |
 | value | DECIMAL(12,2) | NO | — |  |
 | currency | CHAR(3) | YES | — |  |
 | starts_at | DATE | NO | — |  |
@@ -47,7 +47,7 @@ mysql -h 127.0.0.1 -P 3307 -u root -proot app < schema/001_table.sql
 | is_active | BOOLEAN | NO | TRUE |  |
 | created_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) |  |
 | updated_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) |  |
-| OR | (type=''fixed'' AND value >= 0 AND (currency REGEXP ''^[A-Z]{3}$''))) | — | — |  |
+| OR | (type='fixed' AND value >= 0 AND (currency REGEXP '^[A-Z]{3}$'))) | — | — |  |
 
 ## Relationships
 - No outgoing foreign keys.
@@ -55,20 +55,20 @@ mysql -h 127.0.0.1 -P 3307 -u root -proot app < schema/001_table.sql
 ```mermaid
 erDiagram
   COUPONS {
-    BIGINT id PK
-    VARCHAR(100) code
-    ENUM(''percent'',''fixed'') type
-    DECIMAL(12,2) value
-    CHAR(3) currency
-    DATE starts_at
-    DATE ends_at
+    INT id PK
+    VARCHAR code
+    ENUM type
+    DECIMAL value
+    VARCHAR currency
+    DATETIME starts_at
+    DATETIME ends_at
     INT max_redemptions
-    DECIMAL(12,2) min_order_amount
+    DECIMAL min_order_amount
     JSON applies_to
     BOOLEAN is_active
-    DATETIME(6) created_at
-    DATETIME(6) updated_at
-    (type=''fixed'' OR
+    DATETIME created_at
+    DATETIME updated_at
+    COL OR
   }
 ```
 
