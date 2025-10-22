@@ -19,4 +19,3 @@ Discount coupons configuration.
 | is_active | BOOLEAN | NO | TRUE | Whether coupon is currently active. |  |
 | created_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |  |
 | updated_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) | Update timestamp (UTC). |  |
-| OR | (type='fixed' AND value >= 0 AND (currency REGEXP '^[A-Z]{3}$'))) | — | — |  |  |
