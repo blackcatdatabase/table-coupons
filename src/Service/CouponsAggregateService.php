@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace BlackCat\Database\Packages\Coupons\Service;
 
-use BlackCat\Core\Database\Database;
+use BlackCat\Core\Database;
 use BlackCat\Database\Packages\Coupons\Dto\CouponDto;
 use BlackCat\Database\Packages\Coupons\Mapper\CouponDtoMapper;
 use BlackCat\Database\Packages\Coupons\Repository\CouponRepository;
