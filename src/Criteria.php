@@ -5,8 +5,8 @@ namespace BlackCat\Database\Packages\Coupons;
 
 /**
  * Bezpečný builder WHERE/ORDER/LIMIT.
- * - whitelist filtrů: [ 'id', 'code', 'type', 'value', 'currency', 'starts_at', 'ends_at', 'max_redemptions', 'min_order_amount', 'applies_to', 'is_active', 'created_at', 'updated_at', 'OR' ]
- * - whitelist pro LIKE hledání: [ 'code', 'currency' ]
+ * - whitelist filtrů: [ 'id', 'code', 'type', 'value', 'currency', 'starts_at', 'ends_at', 'max_redemptions', 'min_order_amount', 'applies_to', 'is_active', 'created_at', 'updated_at' ]
+ * - whitelist pro LIKE hledání: [ 'code', 'type', 'currency' ]
  */
 final class Criteria {
     /** @var array<string,mixed> */
@@ -45,7 +45,7 @@ final class Criteria {
         $params = [];
 
         // filtry (rovnosti / IN)
-        $allowed = array_fill_keys([ 'id', 'code', 'type', 'value', 'currency', 'starts_at', 'ends_at', 'max_redemptions', 'min_order_amount', 'applies_to', 'is_active', 'created_at', 'updated_at', 'OR' ], true);
+        $allowed = array_fill_keys([ 'id', 'code', 'type', 'value', 'currency', 'starts_at', 'ends_at', 'max_redemptions', 'min_order_amount', 'applies_to', 'is_active', 'created_at', 'updated_at' ], true);
         foreach ($this->filters as $col=>$val) {
             if (!isset($allowed[$col])) { continue; }
             if (is_array($val) && $val) {
@@ -61,7 +61,7 @@ final class Criteria {
 
         // fulltext/LIKE (přes whitelist)
         if ($this->search !== null) {
-            $searchCols = [ 'code', 'currency' ];
+            $searchCols = [ 'code', 'type', 'currency' ];
             $likeParts = [];
             foreach ($searchCols as $i=>$c) {
                 if ($c === '') continue;
@@ -76,7 +76,7 @@ final class Criteria {
         // order
         $order = null;
         if ($this->sort) {
-            $safeCols = array_fill_keys([ 'id', 'code', 'type', 'value', 'currency', 'starts_at', 'ends_at', 'max_redemptions', 'min_order_amount', 'applies_to', 'is_active', 'created_at', 'updated_at', 'OR' ], true);
+            $safeCols = array_fill_keys([ 'id', 'code', 'type', 'value', 'currency', 'starts_at', 'ends_at', 'max_redemptions', 'min_order_amount', 'applies_to', 'is_active', 'created_at', 'updated_at' ], true);
             $parts = [];
             foreach ($this->sort as $s) {
                 [$c,$d] = [$s['col'], strtoupper($s['dir'] ?? 'ASC')];

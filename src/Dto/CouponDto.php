@@ -22,8 +22,7 @@ final class CouponDto {
         public readonly array|null $appliesTo,
         public readonly bool $isActive,
         public readonly \DateTimeImmutable $createdAt,
-        public readonly \DateTimeImmutable $updatedAt,
-        public readonly ?string $or
+        public readonly \DateTimeImmutable $updatedAt
     ) {}
 
     /** Vhodné pro serializaci/logování (bez binárních/velkých blobů). */

@@ -6,9 +6,9 @@ namespace BlackCat\Database\Packages\Coupons;
 final class Definitions {
     // --- základní metadata ---
     public static function table(): string { return 'coupons'; }
-    public static function contractView(): string { return 'v_coupons_contract'; }
+    public static function contractView(): string { return 'vw_coupons'; }
     /** @return string[] */
-    public static function columns(): array { return [ 'id', 'code', 'type', 'value', 'currency', 'starts_at', 'ends_at', 'max_redemptions', 'min_order_amount', 'applies_to', 'is_active', 'created_at', 'updated_at', 'OR' ]; }
+    public static function columns(): array { return [ 'id', 'code', 'type', 'value', 'currency', 'starts_at', 'ends_at', 'max_redemptions', 'min_order_amount', 'applies_to', 'is_active', 'created_at', 'updated_at' ]; }
     public static function pk(): string { return 'id'; }
 
     // --- volitelná metadata (mohou být prázdná) ---
