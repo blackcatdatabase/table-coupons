@@ -1,13 +1,13 @@
--- Auto-generated from schema-views-mysql.psd1 (map@38d5403)
+-- Auto-generated from schema-views-mysql.psd1 (map@c5e4097)
 -- engine: mysql
 -- table:  coupons
 -- Contract view for [coupons]
 -- Adds is_current helper.
-CREATE OR REPLACE SQL SECURITY INVOKER VIEW vw_coupons AS
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_coupons AS
 SELECT
   id,
   code,
-  type,
+  `type`,
   value,
   currency,
   starts_at,
@@ -16,7 +16,7 @@ SELECT
   min_order_amount,
   applies_to,
   is_active,
-  (is_active = 1 AND NOW() >= starts_at AND (ends_at IS NULL OR NOW() <= ends_at)) AS is_current,
+  (is_active = 1 AND (starts_at IS NULL OR NOW() >= starts_at) AND (ends_at IS NULL OR NOW() <= ends_at)) AS is_current,
   created_at,
   updated_at
 FROM coupons;
