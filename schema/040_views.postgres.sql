@@ -1,4 +1,4 @@
--- Auto-generated from schema-views-postgres.psd1 (map@c5e4097)
+-- Auto-generated from schema-views-postgres.psd1 (map@db2f8b8)
 -- engine: postgres
 -- table:  coupons
 -- Contract view for [coupons]
@@ -16,7 +16,7 @@ SELECT
   min_order_amount,
   applies_to,
   is_active,
-  CASE WHEN (is_active AND (starts_at IS NULL OR now() >= starts_at) AND (ends_at IS NULL OR now() <= ends_at)) THEN 1 ELSE 0 END AS is_current,
+  (is_active AND (starts_at IS NULL OR now() >= starts_at) AND (ends_at IS NULL OR now() <= ends_at)) AS is_current,
   created_at,
   updated_at
 FROM coupons;
