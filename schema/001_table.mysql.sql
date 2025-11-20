@@ -1,9 +1,11 @@
--- Auto-generated from schema-map-mysql.psd1 (map@db2f8b8)
+-- Auto-generated from schema-map-mysql.psd1 (map@734a489)
 -- engine: mysql
 -- table:  coupons
 CREATE TABLE IF NOT EXISTS coupons (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  code VARCHAR(100) NOT NULL UNIQUE,
+  tenant_id BIGINT UNSIGNED NOT NULL,
+  code VARCHAR(100) NOT NULL,
+  code_ci VARCHAR(100) GENERATED ALWAYS AS (LOWER(code)) STORED,
   `type` ENUM('percent','fixed') NOT NULL,
   value DECIMAL(12,2) NOT NULL,
   currency CHAR(3) NULL,
@@ -18,4 +20,4 @@ CREATE TABLE IF NOT EXISTS coupons (
   CONSTRAINT chk_coupon_percent_fixed CHECK (
     (`type`='percent' AND value BETWEEN 0 AND 100 AND currency IS NULL)
     OR (`type`='fixed' AND value >= 0 AND (currency REGEXP '^[A-Z]{3}$')))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
