@@ -1,4 +1,4 @@
--- Auto-generated from schema-views-mysql.psd1 (map@db2f8b8)
+-- Auto-generated from schema-views-mysql.psd1 (map@62c9c93)
 -- engine: mysql
 -- table:  coupons
 -- Contract view for [coupons]
@@ -6,6 +6,7 @@
 CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_coupons AS
 SELECT
   id,
+  tenant_id,
   code,
   `type`,
   value,
@@ -20,3 +21,22 @@ SELECT
   created_at,
   updated_at
 FROM coupons;
+
+-- Auto-generated from schema-views-feature-mysql.psd1 (map@62c9c93)
+-- engine: mysql
+-- table:  coupons_effectiveness
+-- Redemptions and total discount per coupon
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_coupon_effectiveness AS
+SELECT
+  c.id,
+  c.code,
+  c.is_active,
+  c.starts_at,
+  c.ends_at,
+  COUNT(cr.id)      AS redemptions,
+  SUM(cr.amount_applied) AS total_applied
+FROM coupons c
+LEFT JOIN coupon_redemptions cr ON cr.coupon_id = c.id
+GROUP BY c.id, c.code, c.is_active, c.starts_at, c.ends_at
+ORDER BY redemptions DESC;
+
