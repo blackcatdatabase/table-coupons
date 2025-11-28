@@ -17,7 +17,7 @@ use BlackCat\Database\Support\DtoHydrator;
 final class CouponDtoMapper
 {
     /** @var array<string,string> Column -> DTO property */
-    private const COL_TO_PROP = [ 'tenant_id' => 'tenantId', 'code_ci' => 'codeCi', 'starts_at' => 'startsAt', 'ends_at' => 'endsAt', 'max_redemptions' => 'maxRedemptions', 'min_order_amount' => 'minOrderAmount', 'applies_to' => 'appliesTo', 'is_active' => 'isActive', 'created_at' => 'createdAt', 'updated_at' => 'updatedAt' ];
+    private const COL_TO_PROP = [ 'id' => 'id', 'tenant_id' => 'tenantId', 'code' => 'code', 'code_ci' => 'codeCi', 'type' => 'type', 'value' => 'value', 'currency' => 'currency', 'starts_at' => 'startsAt', 'ends_at' => 'endsAt', 'max_redemptions' => 'maxRedemptions', 'min_order_amount' => 'minOrderAmount', 'applies_to' => 'appliesTo', 'is_active' => 'isActive', 'created_at' => 'createdAt', 'updated_at' => 'updatedAt' ];
 
     /** @var string[] */
     private const BOOL_COLS   = [ 'is_active' ];
