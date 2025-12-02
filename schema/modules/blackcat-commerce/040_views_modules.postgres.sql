@@ -1,6 +1,7 @@
--- Auto-generated from feature-modules-postgres.psd1 (map@mtime:2025-11-27T14:08:26Z)
+-- Auto-generated from feature-modules-postgres.yaml (map@94ebe6c)
 -- engine: postgres
 -- table:  coupon_redemptions_effectiveness
+
 -- Redemptions and total discount per coupon
 CREATE OR REPLACE VIEW vw_coupon_redemptions_effectiveness AS
 SELECT
