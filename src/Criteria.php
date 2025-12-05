@@ -38,7 +38,7 @@ final class Criteria extends BaseCriteria
     /** Columns used for full-text LIKE/ILIKE searches. */
     protected function searchable(): array
     {
-        return [ 'code', 'code_ci', 'type', 'currency' ];
+        return [ 'code', 'code_ci', 'currency' ];
     }
 
 /** Columns allowed in ORDER BY (falls back to filterable() when empty). */
