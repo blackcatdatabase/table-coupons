@@ -1,6 +1,7 @@
--- Auto-generated from schema-views-postgres.psd1 (map@62c9c93)
+-- Auto-generated from schema-views-postgres.yaml (map@sha1:EDC13878AE5F346E7EAD2CF0A484FEB7E68F6CDD)
 -- engine: postgres
 -- table:  coupons
+
 -- Contract view for [coupons]
 -- Adds is_current helper.
 CREATE OR REPLACE VIEW vw_coupons AS
@@ -21,22 +22,3 @@ SELECT
   created_at,
   updated_at
 FROM coupons;
-
--- Auto-generated from schema-views-feature-postgres.psd1 (map@62c9c93)
--- engine: postgres
--- table:  coupons_effectiveness
--- Redemptions and total discount per coupon
-CREATE OR REPLACE VIEW vw_coupon_effectiveness AS
-SELECT
-  c.id,
-  c.code,
-  c.is_active,
-  c.starts_at,
-  c.ends_at,
-  COUNT(cr.id)      AS redemptions,
-  SUM(cr.amount_applied) AS total_applied
-FROM coupons c
-LEFT JOIN coupon_redemptions cr ON cr.coupon_id = c.id
-GROUP BY c.id, c.code, c.is_active, c.starts_at, c.ends_at
-ORDER BY redemptions DESC NULLS LAST;
-

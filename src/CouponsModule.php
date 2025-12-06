@@ -32,15 +32,57 @@ final class CouponsModule implements ModuleInterface
         $table = SqlIdentifier::qi($db, $this->table());
         $view  = SqlIdentifier::qi($db, self::contractView());
 
+        if ($d->isMysql()) {
+            $createViewSql = <<<'SQL'
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_coupons AS
+SELECT
+  id,
+  tenant_id,
+  code,
+  `type`,
+  value,
+  currency,
+  starts_at,
+  ends_at,
+  max_redemptions,
+  min_order_amount,
+  applies_to,
+  is_active,
+  (is_active = 1 AND (starts_at IS NULL OR NOW() >= starts_at) AND (ends_at IS NULL OR NOW() <= ends_at)) AS is_current,
+  created_at,
+  updated_at
+FROM coupons;
+SQL;
+        } else {
+            $createViewSql = <<<'SQL'
+CREATE OR REPLACE VIEW vw_coupons AS
+SELECT
+  id,
+  tenant_id,
+  code,
+  type,
+  value,
+  currency,
+  starts_at,
+  ends_at,
+  max_redemptions,
+  min_order_amount,
+  applies_to,
+  is_active,
+  (is_active AND (starts_at IS NULL OR now() >= starts_at) AND (ends_at IS NULL OR now() <= ends_at)) AS is_current,
+  created_at,
+  updated_at
+FROM coupons;
+SQL;
+        }
+
         if (\class_exists('\\BlackCat\\Database\\Support\\DdlGuard')) {
-            (new \BlackCat\Database\Support\DdlGuard($db, $d))->applyCreateView(
-                "CREATE VIEW {$view} AS SELECT * FROM {$table}"
-            );
+            (new \BlackCat\Database\Support\DdlGuard($db, $d))->applyCreateView($createViewSql);
         } else {
             // Prefer CREATE OR REPLACE VIEW (gentle on dependencies)
-            $sql = "CREATE OR REPLACE VIEW {$view} AS SELECT * FROM {$table}";
-            $db->exec($sql);
+            $db->exec($createViewSql);
         }
+
     }
 
     public function upgrade(Database $db, SqlDialect $d, string $from): void
@@ -67,8 +109,15 @@ final class CouponsModule implements ModuleInterface
         $hasTable = SchemaIntrospector::hasTable($db, $d, $table);
         $hasView  = SchemaIntrospector::hasView($db, $d, $view);
 
-        // Quick index/FK check – generator injects names (case-sensitive per DB)
+        // Quick index/FK check â€“ generator injects names (case-sensitive per DB)
         $expectedIdx = [ 'idx_coupons_tenant_active', 'idx_coupons_tenant_id', 'ux_coupons_tenant_code_ci' ];
+        if ($d->isMysql()) {
+            // Drop PG-only index naming patterns (e.g., GIN/GiST)
+            $expectedIdx = array_values(array_filter(
+                $expectedIdx,
+                static fn(string $n): bool => !str_starts_with($n, 'gin_') && !str_starts_with($n, 'gist_')
+            ));
+        }
         $expectedFk  = [ 'fk_coupons_tenant' ];
 
         $haveIdx = $hasTable ? SchemaIntrospector::listIndexes($db, $d, $table)     : [];
