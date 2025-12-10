@@ -5,19 +5,19 @@ Discount coupons configuration.
 ## Columns
 | Column | Type | Null | Default | Description |
 | --- | --- | --- | --- | --- |
-| applies_to | mysql: JSON / postgres: JSONB | YES |  | JSON targeting (SKUs, categories, users). |
-| code | VARCHAR(100) | NO |  | Unique coupon code (case-sensitive). |
-| created_at | mysql: DATETIME(6) / postgres: TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
-| currency | CHAR(3) | YES |  | ISO 4217 currency for fixed discounts; NULL for percent. |
-| ends_at | DATE | YES |  | Validity end (date), nullable. |
 | id | BIGINT | NO |  | Surrogate primary key. |
-| is_active | BOOLEAN | NO | TRUE | Whether coupon is currently active. |
+| code | VARCHAR(100) | NO |  | Unique coupon code (case-sensitive). |
+| type | mysql: ENUM('percent','fixed') / postgres: TEXT | NO |  | Discount type. (enum: percent, fixed) |
+| value | mysql: DECIMAL(12,2) / postgres: NUMERIC(12,2) | NO |  | Discount value (percent or fixed). |
+| currency | CHAR(3) | YES |  | ISO 4217 currency for fixed discounts; NULL for percent. |
+| starts_at | DATE | NO |  | Validity start (date). |
+| ends_at | DATE | YES |  | Validity end (date), nullable. |
 | max_redemptions | mysql: INT / postgres: INTEGER | NO | 0 | Max total redemptions across users (0 = unlimited). |
 | min_order_amount | mysql: DECIMAL(12,2) / postgres: NUMERIC(12,2) | YES |  | Minimum order subtotal to apply (optional). |
-| starts_at | DATE | NO |  | Validity start (date). |
-| type | mysql: ENUM('percent','fixed') / postgres: TEXT | NO |  | Discount type. (enum: percent, fixed) |
+| applies_to | mysql: JSON / postgres: JSONB | YES |  | JSON targeting (SKUs, categories, users). |
+| is_active | BOOLEAN | NO | TRUE | Whether coupon is currently active. |
+| created_at | mysql: DATETIME(6) / postgres: TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Creation timestamp (UTC). |
 | updated_at | mysql: DATETIME(6) / postgres: TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Update timestamp (UTC). |
-| value | mysql: DECIMAL(12,2) / postgres: NUMERIC(12,2) | NO |  | Discount value (percent or fixed). |
 
 ## Engine Details
 
