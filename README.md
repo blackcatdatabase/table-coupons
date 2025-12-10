@@ -98,10 +98,10 @@ graph LR
 _No engine differences detected._
 
 ## Constraints Snapshot
-- `created_at` – default=CURRENT_TIMESTAMP(6)
-- `is_active` – default=TRUE
-- `max_redemptions` – default=0
 - `type` – enum
+- `max_redemptions` – default=0
+- `is_active` – default=TRUE
+- `created_at` – default=CURRENT_TIMESTAMP(6)
 - `updated_at` – default=CURRENT_TIMESTAMP(6)
 
 ## Schema Files
