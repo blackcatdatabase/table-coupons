@@ -1,0 +1,53 @@
+{
+  "tables": {
+    "coupons": {
+      "columns": {
+        "applies_to": {
+          "strategy": "passthrough"
+        },
+        "code": {
+          "strategy": "passthrough"
+        },
+        "code_ci": {
+          "strategy": "passthrough"
+        },
+        "created_at": {
+          "strategy": "passthrough"
+        },
+        "currency": {
+          "strategy": "passthrough"
+        },
+        "ends_at": {
+          "strategy": "passthrough"
+        },
+        "id": {
+          "strategy": "passthrough"
+        },
+        "is_active": {
+          "strategy": "passthrough"
+        },
+        "max_redemptions": {
+          "strategy": "passthrough"
+        },
+        "min_order_amount": {
+          "strategy": "passthrough"
+        },
+        "starts_at": {
+          "strategy": "passthrough"
+        },
+        "tenant_id": {
+          "strategy": "passthrough"
+        },
+        "type": {
+          "strategy": "passthrough"
+        },
+        "updated_at": {
+          "strategy": "passthrough"
+        },
+        "value": {
+          "strategy": "passthrough"
+        }
+      }
+    }
+  }
+}
